@@ -29,5 +29,8 @@ class meltanoStream(Stream):
             my_row = row._asdict()
             my_dict = {}
             for key in my_row:
-                my_dict[key] = str(my_row[key])
+                if str(my_row[key]) == "None":
+                    my_dict[key] = None
+                else:
+                    my_dict[key] = str(my_row[key])
             yield my_dict
