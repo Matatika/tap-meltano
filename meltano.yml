@@ -5,7 +5,7 @@ plugins:
   extractors:
   - name: tap-meltano
     namespace: tap_meltano
-     executable: ./tap-meltano.sh
+    executable: ./tap-meltano.sh
     capabilities:
     - state
     - catalog
