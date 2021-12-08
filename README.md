@@ -14,9 +14,9 @@ pipx install tap-meltano
 
 ## Configuration
 
-### Accepted Config Options
+### Settings
 
-- [ ] `Developer TODO:` Provide a list of config options accepted by the tap.
+Currently the only required setting, or setting at all, for this tap is `meltano_database_uri`. This setting points the tap to the database where you want to get the Meltano jobs from.
 
 A full list of supported settings and capabilities for this
 tap is available by running:
@@ -25,9 +25,9 @@ tap is available by running:
 tap-meltano --about
 ```
 
-### Source Authentication and Authorization
+### State
 
-- [ ] `Developer TODO:` If your tap requires special access on the source system, or any special authentication requirements, provide those here.
+No state support at the moment, this tap will full sync from the target `meltano_database_uri` each time you run it.
 
 ## Usage
 
@@ -40,10 +40,6 @@ tap-meltano --version
 tap-meltano --help
 tap-meltano --config CONFIG --discover > ./catalog.json
 ```
-
-## Developer Resources
-
-- [ ] `Developer TODO:` As a first step, scan the entire project for the text "`TODO:`" and complete any recommended steps, deleting the "TODO" references once completed.
 
 ### Initialize your Development Environment
 
