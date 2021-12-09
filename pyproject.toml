@@ -37,4 +37,4 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.scripts]
 # CLI declaration
-tap-meltano = 'tap_meltano.tap:Tapmeltano.cli'
+tap-meltano = 'tap_meltano.tap:TapMeltano.cli'
