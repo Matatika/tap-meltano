@@ -7,11 +7,11 @@ from singer_sdk import typing as th
 
 
 from tap_meltano.streams import (
-    JobsStream,
+    JobStream,
 )
 
 STREAM_TYPES = [
-    JobsStream,
+    JobStream,
 ]
 
 

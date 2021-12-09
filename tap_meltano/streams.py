@@ -7,11 +7,18 @@ from singer_sdk import typing as th
 from tap_meltano.client import meltanoStream
 
 
-class JobsStream(meltanoStream):
+class JobStream(meltanoStream):
     """Jobs stream."""
 
-    name = "jobs"
-    replication_key = "id"
+    name = "job"
+    primary_keys = ["id"]
+    replication_key = "started_at"
+
+    def query(self):
+        self.get_context_state()
+        return "select * from job order by id ASC"
+        
+
     schema = th.PropertiesList(
         th.Property("id", th.StringType),
         th.Property("job_id", th.StringType),

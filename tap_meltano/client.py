@@ -10,6 +10,9 @@ from singer_sdk.streams import Stream
 class meltanoStream(Stream):
     """Stream class for meltano streams."""
 
+    def query(self):
+        pass
+
     def get_records(self, context: Optional[dict]) -> Iterable[dict]:
         """Return a generator of row-type dictionary objects.
 
@@ -20,12 +23,10 @@ class meltanoStream(Stream):
 
         engine = create_engine(self.config.get("meltano_database_uri"))
 
-        rows = None
-
         with engine.connect() as conn:
-            rows = conn.execute(text(f"select * from job order by id ASC"))
+            rows = conn.execute(text(self.query())).all()
 
-        for row in rows.all():
+        for row in rows:
             my_row = row._asdict()
             my_dict = {}
             for key in my_row:
