@@ -7,10 +7,10 @@ from singer_sdk import typing as th
 from tap_meltano.client import meltanoStream
 
 
-class JobsStream(meltanoStream):
+class MeltanoJobsStream(meltanoStream):
     """Jobs stream."""
 
-    name = "stream_jobs"
+    name = "stream_meltano_jobs"
     primary_keys = ["id"]
     replication_key = "started_at"
 
