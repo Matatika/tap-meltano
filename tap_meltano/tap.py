@@ -15,7 +15,7 @@ STREAM_TYPES = [
 ]
 
 
-class Tapmeltano(Tap):
+class TapMeltano(Tap):
     """meltano tap class."""
 
     name = "tap-meltano"
