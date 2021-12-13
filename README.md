@@ -1,3 +1,4 @@
+<a href="https://github.com/Matatika/tap-meltano/blob/master/LICENSE"><img alt="GitHub license" src="https://img.shields.io/github/license/Matatika/tap-meltano"></a>
 # tap-meltano
 
 `tap-meltano` is a Singer tap for meltano.
