@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "tap-meltano"
-version = "0.3.0"
+version = "0.3.1"
 description = "`tap-meltano` is a Singer tap for meltano, built with the Meltano SDK for Singer Taps."
 authors = ["Daniel Walker"]
 keywords = [
@@ -10,9 +10,9 @@ keywords = [
 license = "Apache 2.0"
 
 [tool.poetry.dependencies]
-python = "<3.10,>=3.6.2"
+python = "<3.12,>=3.7.1"
 requests = "^2.25.1"
-singer-sdk = "^0.3.15"
+singer-sdk = "^0.20.0"
 sqlalchemy = "^1.4.27"
 psycopg2 = "^2.9.2"
 
