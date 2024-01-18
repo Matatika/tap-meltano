@@ -4,8 +4,7 @@ project_id: f2de5de8-46e4-4067-b438-b0e3c9167deb
 plugins:
   extractors:
   - name: tap-meltano
-    namespace: tap_meltano
-    executable: ./tap-meltano.sh
+    pip_url: -e .
     capabilities:
     - state
     - catalog
