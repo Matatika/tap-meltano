@@ -21,7 +21,7 @@ class meltanoStream(Stream):
         require partitioning and should ignore the `context` argument.
         """
 
-        engine = create_engine(self.config.get("meltano_database_uri"))
+        engine = create_engine(self.config["meltano_database_uri"])
 
         with engine.connect() as conn:
             rows = conn.execute(text(self.query())).all()
