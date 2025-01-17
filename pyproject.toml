@@ -17,7 +17,7 @@ sqlalchemy = "^2.0.37"
 psycopg2-binary = "^2.9.9"
 
 [tool.poetry.dev-dependencies]
-pytest = "^6.2.5"
+pytest = "^8.3.4"
 tox = "^3.24.4"
 flake8 = "^3.9.2"
 black = "^24.3"
