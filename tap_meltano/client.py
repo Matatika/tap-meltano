@@ -1,37 +1,21 @@
-"""Custom client handling, including meltanoStream base class."""
+"""SQL client handling.
 
-from sqlalchemy import create_engine, text
-from pathlib import Path
-from typing import Optional, Iterable
+This includes MeltanoStream and MeltanoConnector.
+"""
 
-from singer_sdk.streams import Stream
+from __future__ import annotations
+
+from singer_sdk import SQLConnector, SQLStream
 
 
-class meltanoStream(Stream):
-    """Stream class for meltano streams."""
+class MeltanoConnector(SQLConnector):
+    """Connects to the Meltano SQL source."""
 
-    def query(self):
-        pass
+    def get_sqlalchemy_url(self, config):
+        return config["meltano_database_uri"]
 
-    def get_records(self, context: Optional[dict]) -> Iterable[dict]:
-        """Return a generator of row-type dictionary objects.
 
-        The optional `context` argument is used to identify a specific slice of the
-        stream if partitioning is required for the stream. Most implementations do not
-        require partitioning and should ignore the `context` argument.
-        """
+class MeltanoStream(SQLStream):
+    """Stream class for Meltano streams."""
 
-        engine = create_engine(self.config["meltano_database_uri"])
-
-        with engine.connect() as conn:
-            rows = conn.execute(text(self.query())).all()
-
-        for row in rows:
-            my_row = row._asdict()
-            my_dict = {}
-            for key in my_row:
-                if str(my_row[key]) == "None":
-                    my_dict[key] = None
-                else:
-                    my_dict[key] = str(my_row[key])
-            yield my_dict
+    connector_class = MeltanoConnector

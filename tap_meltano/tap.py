@@ -1,21 +1,18 @@
-"""meltano tap class."""
+"""Meltano tap class."""
 
-from typing import List
+from __future__ import annotations
 
-from singer_sdk import Stream, Tap
-from singer_sdk import typing as th
+from singer_sdk import SQLTap
+from singer_sdk import typing as th  # JSON schema typing helpers
 
-from tap_meltano.streams import MeltanoJobsStream
-
-STREAM_TYPES = [
-    MeltanoJobsStream,
-]
+from tap_meltano.client import MeltanoStream
 
 
-class TapMeltano(Tap):
-    """meltano tap class."""
+class TapMeltano(SQLTap):
+    """Meltano tap class."""
 
     name = "tap-meltano"
+    default_stream_class = MeltanoStream
 
     config_jsonschema = th.PropertiesList(
         th.Property(
@@ -30,7 +27,3 @@ class TapMeltano(Tap):
             default="sqlite:///.meltano/meltano.db",
         ),
     ).to_dict()
-
-    def discover_streams(self) -> List[Stream]:
-        """Return a list of discovered streams."""
-        return [stream_class(tap=self) for stream_class in STREAM_TYPES]
