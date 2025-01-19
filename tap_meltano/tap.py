@@ -27,3 +27,7 @@ class TapMeltano(SQLTap):
             default="sqlite:///.meltano/meltano.db",
         ),
     ).to_dict()
+
+
+if __name__ == "__main__":
+    TapMeltano.cli()

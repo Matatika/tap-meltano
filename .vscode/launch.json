@@ -1,0 +1,17 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "tap-meltano",
+            "type": "debugpy",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "module": "tap_meltano.tap",
+            "justMyCode": false,
+            "args": [
+                "--config",
+                ".secrets/config.json",
+            ],
+        }
+    ]
+}
