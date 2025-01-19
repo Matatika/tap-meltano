@@ -8,12 +8,39 @@ from __future__ import annotations
 from singer_sdk import SQLConnector, SQLStream
 from typing_extensions import override
 
+KNOWN_TABLES = {
+    "alembic_version",
+    "embed_tokens",
+    "job",  # meltano<=2.1
+    "oauth",
+    "plugin_settings",
+    "role",
+    "role_permissions",
+    "roles_users",
+    "runs",  # meltano>=2.2
+    "state",
+    "subscriptions",
+    "user",
+}
+
 
 class MeltanoConnector(SQLConnector):
     """Connects to the Meltano SQL source."""
 
     def get_sqlalchemy_url(self, config):
         return config["meltano_database_uri"]
+
+    @override
+    def discover_catalog_entries(self, *args, **kwargs):
+        for entry in super().discover_catalog_entries(*args, **kwargs):
+            if (table_name := entry["table_name"]) not in KNOWN_TABLES:
+                self.logger.info(
+                    "'%s' is not a known Meltano table, skipping",
+                    table_name,
+                )
+                continue
+
+            yield entry
 
     @override
     def discover_catalog_entry(
