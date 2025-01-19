@@ -1,37 +1,76 @@
-"""Custom client handling, including meltanoStream base class."""
+"""SQL client handling.
 
-from sqlalchemy import create_engine, text
-from pathlib import Path
-from typing import Optional, Iterable
+This includes MeltanoStream and MeltanoConnector.
+"""
 
-from singer_sdk.streams import Stream
+from __future__ import annotations
+
+from singer_sdk import SQLConnector, SQLStream
+from typing_extensions import override
+
+KNOWN_TABLES = {
+    "alembic_version",
+    "embed_tokens",
+    "job",  # meltano<=2.1
+    "oauth",
+    "plugin_settings",
+    "role",
+    "role_permissions",
+    "roles_users",
+    "runs",  # meltano>=2.2
+    "state",
+    "subscriptions",
+    "user",
+}
 
 
-class meltanoStream(Stream):
-    """Stream class for meltano streams."""
+class MeltanoConnector(SQLConnector):
+    """Connects to the Meltano SQL source."""
 
-    def query(self):
-        pass
+    def get_sqlalchemy_url(self, config):
+        return config["meltano_database_uri"]
 
-    def get_records(self, context: Optional[dict]) -> Iterable[dict]:
-        """Return a generator of row-type dictionary objects.
+    @override
+    def discover_catalog_entries(self, *args, **kwargs):
+        for entry in super().discover_catalog_entries(*args, **kwargs):
+            if (table_name := entry["table_name"]) not in KNOWN_TABLES:
+                self.logger.info(
+                    "'%s' is not a known Meltano table, skipping",
+                    table_name,
+                )
+                continue
 
-        The optional `context` argument is used to identify a specific slice of the
-        stream if partitioning is required for the stream. Most implementations do not
-        require partitioning and should ignore the `context` argument.
-        """
+            yield entry
 
-        engine = create_engine(self.config["meltano_database_uri"])
+    @override
+    def discover_catalog_entry(
+        self,
+        engine,
+        inspected,
+        schema_name,
+        table_name,
+        is_view,
+        *,
+        reflected_columns=None,
+        reflected_pk=None,
+        reflected_indices=None,
+    ):
+        catalog_entry = super().discover_catalog_entry(
+            engine,
+            inspected,
+            None,  # prevent unnecessary schema prefix, as everything should only ever be in a single schema
+            table_name,
+            is_view,
+            reflected_columns=reflected_columns,
+            reflected_pk=reflected_pk,
+            reflected_indices=reflected_indices,
+        )
+        catalog_entry.metadata.root.selected_by_default = True
 
-        with engine.connect() as conn:
-            rows = conn.execute(text(self.query())).all()
+        return catalog_entry
 
-        for row in rows:
-            my_row = row._asdict()
-            my_dict = {}
-            for key in my_row:
-                if str(my_row[key]) == "None":
-                    my_dict[key] = None
-                else:
-                    my_dict[key] = str(my_row[key])
-            yield my_dict
+
+class MeltanoStream(SQLStream):
+    """Stream class for Meltano streams."""
+
+    connector_class = MeltanoConnector
