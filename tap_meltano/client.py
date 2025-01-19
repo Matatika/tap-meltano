@@ -28,7 +28,7 @@ class MeltanoConnector(SQLConnector):
         reflected_pk=None,
         reflected_indices=None,
     ):
-        return super().discover_catalog_entry(
+        catalog_entry = super().discover_catalog_entry(
             engine,
             inspected,
             None,  # prevent unnecessary schema prefix, as everything should only ever be in a single schema
@@ -38,6 +38,9 @@ class MeltanoConnector(SQLConnector):
             reflected_pk=reflected_pk,
             reflected_indices=reflected_indices,
         )
+        catalog_entry.metadata.root.selected_by_default = True
+
+        return catalog_entry
 
 
 class MeltanoStream(SQLStream):
