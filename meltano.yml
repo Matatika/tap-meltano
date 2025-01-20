@@ -7,6 +7,7 @@ environments:
 plugins:
   extractors:
   - name: tap-meltano
+    namespace: tap_meltano
     pip_url: -e .
     capabilities:
     - state
