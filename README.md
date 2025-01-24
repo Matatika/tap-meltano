@@ -1,9 +1,12 @@
-<a href="https://github.com/Matatika/tap-meltano/blob/master/LICENSE"><img alt="GitHub license" src="https://img.shields.io/github/license/Matatika/tap-meltano"></a>
 # tap-meltano
 
-`tap-meltano` is a Singer tap for meltano.
+`tap-meltano` is a Singer tap for Meltano.
 
 Built with the [Meltano Tap SDK](https://sdk.meltano.com) for Singer Taps.
+
+[![Python version](https://img.shields.io/badge/dynamic/toml?url=https%3A%2F%2Fraw.githubusercontent.com%2FMatatika%2Ftap-meltano%2Fmaster%2Fpyproject.toml&query=tool.poetry.dependencies.python&label=python)](https://docs.python.org/3/)
+[![Singer SDK version](https://img.shields.io/badge/dynamic/toml?url=https%3A%2F%2Fraw.githubusercontent.com%2FMatatika%2Ftap-meltano%2Fmaster%2Fpyproject.toml&query=tool.poetry.dependencies%5B%22singer-sdk%22%5D&label=singer-sdk)](https://sdk.meltano.com/en/latest/)
+[![License](https://img.shields.io/github/license/Matatika/tap-meltano)](https://github.com/Matatika/tap-meltano/blob/master/LICENSE)
 
 ## Installation
 
