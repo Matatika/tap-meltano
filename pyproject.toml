@@ -12,7 +12,7 @@ license = "Apache 2.0"
 [tool.poetry.dependencies]
 python = "^3.9"
 requests = "^2.31.0"
-singer-sdk = "^0.45.11"
+singer-sdk = "^0.46.0"
 sqlalchemy = "^2.0.40"
 psycopg2-binary = "^2.9.9"
 
