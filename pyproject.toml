@@ -22,7 +22,7 @@ tox = "^4.27.0"
 flake8 = "^7.3.0"
 black = "^25.1"
 pydocstyle = "^6.1.1"
-mypy = "^1.16"
+mypy = "^1.17"
 isort = "^6.0.1"
 
 [tool.isort]
